@@ -12,6 +12,7 @@ var CONNECTION_STRING = process.env.connection_string;
 var PORT = process.env.PORT || 3000;
 var databaseName = "websitedb";
 var database;
+
 app.listen(PORT, ()=>{
     Mongoclient.connect(CONNECTION_STRING,(error,client)=>{
         if (error) {
@@ -23,7 +24,15 @@ app.listen(PORT, ()=>{
     })
 })
 app.get('/api/GetProjects',(request,response)=>{
+    if(!database) {
+        console.log()
+        return response.status(500).send("Database not working");
+    }
     database.collection("websitecollection").find({}).toArray((error,result)=>{
+        if(error){
+            response.status(500).send(error);
+        }
         response.send(result);
     });
+    
 })

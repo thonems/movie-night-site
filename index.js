@@ -2,6 +2,8 @@ const form = document.getElementById("form");
 const input = document.getElementById("input-text");
 const moviesContainer = document.getElementById("movie-container");
 
+//url from window so that the links will work
+const apiBaseURL = window.location.origin;
 let movieArr = [];
 
 
@@ -12,7 +14,7 @@ form.addEventListener('submit', function (e) {
     const inputValue = input.value;
 
     // API call for the input value using the proxy endpoint
-    fetch(`http://localhost:3000/api/omdb?s=${inputValue}&page=1&type=movie`)
+    fetch(`${apiBaseURL}/api/omdb?s=${inputValue}&page=1&type=movie`)
         .then(res => {
             if (!res.ok) {
                 throw new Error('Network response was not ok');
@@ -30,7 +32,7 @@ form.addEventListener('submit', function (e) {
 
                 // API call to find information about each movie using the proxy endpoint
                 for (let id of movieId) {
-                    fetch(`http://localhost:3000/api/omdb?i=${id}`)
+                    fetch(`${apiBaseURL}/api/omdb?i=${id}`)
                         .then(res => {
                             if (!res.ok) {
                                 throw new Error('Network response was not ok');

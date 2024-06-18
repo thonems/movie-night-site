@@ -1,12 +1,15 @@
 require('dotenv').config();
 var Express = require("express");
-
 var Mongoclient = require("mongodb").MongoClient;
 var cors = require("cors");
+var bodyParser = require('body-parser');
 const multer = require("multer");
 
 var app = Express();
 app.use(cors());
+
+//middleware to parse json
+app.use(bodyParser.json());
 
 var CONNECTION_STRING = process.env.connection_string;
 var COLLECTION_NAME = process.env.collection_name;
@@ -15,6 +18,7 @@ var databaseName = "websitedb";
 var database;
 
 app.listen(PORT, ()=>{
+    console.log('Server running on port: '+PORT);
     Mongoclient.connect(CONNECTION_STRING,(error,client)=>{
         if (error) {
             console.error("Failed to connect to the database!", error);
@@ -38,14 +42,29 @@ app.get('/api/movies',(request,response)=>{
 })
 
 app.post('/api/add',(request,response)=>{
-    var myobj = { _id: "tt21354243",Title:"script",Year:"2022",Type:"movie",Poster:"https://m.media-amazon.com/images/M/MV5BMTg1N2IzYTQtZjYzMy00ODczLTk0NmQtOGI5MGY0MWM5ODEzXkEyXkFqcGdeQXVyMTM1MTMxNzEz._V1_SX300.jpg"};
-    database.collection(COLLECTION_NAME).insertOne(myobj,function(error, response){
+    console.log("Trying to add movie");
+    var myMovie = request.body;
+    database.collection(COLLECTION_NAME).insertOne(myMovie,function(error, result){
         if(error){
             console.log(error);
         } else {
-            console.log("added to collection");
+            response.sendStatus(200);
+            console.log(myMovie);
         }
     })
 })
 
-//{"_id:":"tt21358188","Title":"Finding Nemo","Year":"2022","imdbID":"tt21358188","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BMTg1N2IzYTQtZjYzMy00ODczLTk0NmQtOGI5MGY0MWM5ODEzXkEyXkFqcGdeQXVyMTM1MTMxNzEz._V1_SX300.jpg"}
+app.delete('/api/delete/:id',(req,res)=> {
+    const id = req.params.id;
+    console.log("deleting id: "+ id);
+    database.collection(COLLECTION_NAME).deleteOne({ _id: id}, (error,result) => {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error deleting movie');
+        } else if (result.deletedCount === 0) {
+            res.status(404).send('Movie not found');
+        } else {
+            res.sendStatus(200);
+        }
+    })
+})

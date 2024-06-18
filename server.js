@@ -15,6 +15,7 @@ var CONNECTION_STRING = process.env.connection_string;
 var COLLECTION_NAME = process.env.collection_name;
 var PORT = process.env.PORT || 3000;
 var databaseName = "websitedb";
+var omdbApiKey= process.env.OMDB_API_KEY;
 var database;
 
 app.listen(PORT, ()=>{
@@ -68,3 +69,33 @@ app.delete('/api/delete/:id',(req,res)=> {
         }
     })
 })
+
+app.get('/api/omdb', (req, res) => {
+    const { s, i, page, type } = req.query;
+    let url = `https://www.omdbapi.com/?apikey=${omdbApiKey}`;
+    if (s) url += `&s=${s}`;
+    if (i) url += `&i=${i}`;
+    if (page) url += `&page=${page}`;
+    if (type) url += `&type=${type}`;
+
+    console.log('Fetching URL:', url); // Log the URL being fetched
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received from OMDB API:', data); // Log the received data
+            if (!data || typeof data !== 'object') {
+                throw new Error('Invalid JSON received');
+            }
+            res.json(data);
+        })
+        .catch(error => {
+            console.error('Error fetching from OMDB API:', error);
+            res.status(500).send('Error fetching from OMDB API');
+        });
+});

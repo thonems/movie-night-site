@@ -1,14 +1,15 @@
 require('dotenv').config();
-var Express = require("express");
+const express = require('express');
 var Mongoclient = require("mongodb").MongoClient;
 var cors = require("cors");
 var bodyParser = require('body-parser');
 const multer = require("multer");
+const path = require('path');
 
-var app = Express();
+var app = express();
+//middleware
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-
-//middleware to parse json
 app.use(bodyParser.json());
 
 var CONNECTION_STRING = process.env.connection_string;
@@ -27,8 +28,17 @@ app.listen(PORT, ()=>{
         }
         database=client.db(databaseName);
         console.log("Database connected");
-    })
-})
+    });
+});
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','index.html'));
+});
+
+app.get('/watchlist', (req,res)=>{
+    res.sendFile(path.join(__dirname, 'public','watchlist.html'));
+});
 
 app.get('/api/movies',(request,response)=>{
     console.log("/api/movies called");

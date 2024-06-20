@@ -3,20 +3,26 @@ const input = document.getElementById("input-text");
 const moviesContainer = document.getElementById("movie-container");
 
 //url from window so that the links will work
-const apiBaseURL = window.location.origin;
+//const apiBaseURL = window.location.origin;
+//const apiBaseURL = "http://localhost:3000";
+const apiBaseURL = config.apiBaseURL;
+console.log("index" +apiBaseURL);
 let movieArr = [];
 
 
 // Submit search
 form.addEventListener('submit', function (e) {
+    console.log("submiting movie: ")
     moviesContainer.innerHTML = "";
     e.preventDefault();
     const inputValue = input.value;
-
+    console.log(apiBaseURL);
+    
     // API call for the input value using the proxy endpoint
     fetch(`${apiBaseURL}/api/omdb?s=${inputValue}&page=1&type=movie`)
         .then(res => {
             if (!res.ok) {
+                console.log("res not ok ");
                 throw new Error('Network response was not ok');
             }
             return res.json();

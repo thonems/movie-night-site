@@ -31,19 +31,20 @@ app.listen(PORT, ()=>{
 })
 
 app.get('/api/movies',(request,response)=>{
-
+    console.log("/api/movies called");
     database.collection(COLLECTION_NAME).find({}).toArray((error,result)=>{
         if(error){
             console.log("failed getting collection");
             response.status(500).send(error);
         } else {
+            console.log("returning json: " + result);
             response.send(result);
         }
     });
 })
 
 app.post('/api/add',(request,response)=>{
-    console.log("Trying to add movie");
+    console.log("Trying to add movie with api/add post");
     var myMovie = request.body;
     database.collection(COLLECTION_NAME).insertOne(myMovie,function(error, result){
         if(error){
@@ -56,6 +57,7 @@ app.post('/api/add',(request,response)=>{
 })
 
 app.delete('/api/delete/:id',(req,res)=> {
+    console.log("Trying to delete movie with api/delete with id post");
     const id = req.params.id;
     console.log("deleting id: "+ id);
     database.collection(COLLECTION_NAME).deleteOne({ _id: id}, (error,result) => {
@@ -71,6 +73,7 @@ app.delete('/api/delete/:id',(req,res)=> {
 })
 
 app.get('/api/omdb', (req, res) => {
+    console.log("proxy for /api/omdb with api key and query");
     const { s, i, page, type } = req.query;
     let url = `https://www.omdbapi.com/?apikey=${omdbApiKey}`;
     if (s) url += `&s=${s}`;

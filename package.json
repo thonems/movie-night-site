@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": " npm run prettier && nodemon ./server.js localhost 3000",
-    "prettier": "npx prettier . --check"
+    "prettier": "npx prettier . --write"
   },
   "husky": {
     "hooks": {

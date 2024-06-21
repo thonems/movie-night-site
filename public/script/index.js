@@ -64,6 +64,8 @@ form.addEventListener("submit", function (e) {
                             </div> 
                             <hr>
                             <br>`;
+
+                            //adding eventlistener to be able to press the add button for each movie
             })
             .catch((error) => {
               console.error("Error fetching movie details:", error);

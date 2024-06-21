@@ -6,29 +6,33 @@
     <title>Movie Nighth</title>
   </head>
   <body>
-    <head>
+    <header>
       <h1>Find your movie</h1>
-      <a href="watchlist.html">MovieQueue</a>
+      <a href="watchlist.html">Our watchlist</a>
       <link rel="stylesheet" href="css/style.css" />
-    </head>
+    </header>
 
     <section class="search-bar">
       <form action="" class="form" id="form">
-        <div class="inp-icon">
+        <div class="input-container">
           <input
             type="text"
             id="input-text"
             placeholder="Search for movie to watch"
             required
           />
+          <button class="search-button" type="submit">Search</button>
         </div>
-        <button class="search-button" type="submit">Search</button>
+        
       </form>
     </section>
     <div></div>
-    <section class="movies-list">
-      <div id="movie-container"></div>
-    </section>
+    <main>
+        <section class="movies-list">
+            <div id="movies-container"></div>
+          </section>
+    </main>
+
   </body>
   <script src="/script/config.js"></script>
   <script src="/script/index.js"></script>

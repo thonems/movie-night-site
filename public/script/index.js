@@ -1,6 +1,6 @@
 const form = document.getElementById("form");
 const input = document.getElementById("input-text");
-const moviesContainer = document.getElementById("movie-container");
+const moviesContainer = document.getElementById("movies-container");
 
 //url from window so that the links will work
 //const apiBaseURL = window.location.origin;
@@ -54,14 +54,15 @@ form.addEventListener("submit", function (e) {
               moviesContainer.innerHTML += `
                             <br>
                             <div class="movie-container">
-                                <div class="movie">
+                                <div class="movie"> 
                                     <img class="poster" src="${posterUrl}" alt="image of poster from the movie ${data.Title}">
                                     <div>Title: ${data.Title} (${data.Year})</div>
-                                    <div>Plot: ${data.Plot}</div>
                                     <div>Rating: ${data.imdbRating}</div>
                                     <button class="add-movie-btn" id="${data.imdbID}">+</button>
+                                    <div>Plot: ${data.Plot}</div>
                                 </div>
                             </div> 
+                            <hr>
                             <br>`;
             })
             .catch((error) => {

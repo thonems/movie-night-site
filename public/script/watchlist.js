@@ -1,5 +1,6 @@
+const apiBaseURL = config.apiBaseURL;
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://localhost:3000/api/movies")
+  fetch(`${apiBaseURL}/api/movies`)
     .then((response) => response.json())
     .then((data) => {
       const watchlistDiv = document.getElementById("watchlist");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function deleteMovie(id) {
-  fetch(`http://localhost:3000/api/delete/${id}`, {
+  fetch(`${apiBaseURL}/api/delete/${id}`, {
     method: "DELETE",
   })
     .then((response) => {

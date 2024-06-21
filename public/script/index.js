@@ -20,8 +20,8 @@ form.addEventListener("submit", function (e) {
   // API call for the input value using the proxy endpoint
   fetch(`${apiBaseURL}/api/omdb?s=${inputValue}&page=1&type=movie`, {
     headers: {
-      'Cache-Control': 'no-cache',
-    }
+      "Cache-Control": "no-cache",
+    },
   })
     .then((res) => {
       if (!res.ok) {
@@ -44,8 +44,8 @@ form.addEventListener("submit", function (e) {
         for (let id of movieId) {
           fetch(`${apiBaseURL}/api/omdb?i=${id}`, {
             headers: {
-              'Cache-Control': 'no-cache',
-            }
+              "Cache-Control": "no-cache",
+            },
           })
             .then((res) => {
               if (!res.ok) {
@@ -82,7 +82,7 @@ form.addEventListener("submit", function (e) {
                   fetch(`${apiBaseURL}/api/add`, {
                     method: "POST",
                     headers: {
-                      'Content-Type': 'application/json',
+                      "Content-Type": "application/json",
                     },
                     body: JSON.stringify(movie),
                   })

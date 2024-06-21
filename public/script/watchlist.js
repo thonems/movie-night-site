@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p>Type: ${movie.Type}</p>
                     <img src="${movie.Poster}" alt="${movie.Title} Poster" width="100">
                     <button onclick="deleteMovie('${movie._id}')">Delete</button>
+                    <p>${movie.Plot} </p>
                 `;
         watchlistDiv.appendChild(movieDiv);
       });

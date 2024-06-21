@@ -2,7 +2,7 @@
   "name": "glutenfilm",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": " npm run prettier && nodemon ./server.js localhost 3000",

@@ -1,0 +1,12 @@
+.poster-img {
+  width: 10rem;
+  height: 15rem;
+}
+
+body {
+  background-color: aqua;
+}
+
+input {
+  padding: 9px 0px 9px 42px;
+}

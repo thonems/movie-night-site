@@ -18,7 +18,11 @@ form.addEventListener("submit", function (e) {
   console.log(apiBaseURL);
 
   // API call for the input value using the proxy endpoint
-  fetch(`${apiBaseURL}/api/omdb?s=${inputValue}&page=1&type=movie`)
+  fetch(`${apiBaseURL}/api/omdb?s=${inputValue}&page=1&type=movie`, {
+    headers: {
+      'Cache-Control': 'no-cache',
+    }
+  })
     .then((res) => {
       if (!res.ok) {
         console.log("res not ok ");
@@ -38,7 +42,11 @@ form.addEventListener("submit", function (e) {
 
         // API call to find information about each movie using the proxy endpoint
         for (let id of movieId) {
-          fetch(`${apiBaseURL}/api/omdb?i=${id}`)
+          fetch(`${apiBaseURL}/api/omdb?i=${id}`, {
+            headers: {
+              'Cache-Control': 'no-cache',
+            }
+          })
             .then((res) => {
               if (!res.ok) {
                 throw new Error("Network response was not ok");
@@ -65,7 +73,27 @@ form.addEventListener("submit", function (e) {
                             <hr>
                             <br>`;
 
-                            //adding eventlistener to be able to press the add button for each movie
+              //adding eventlistener to be able to press the add button for each movie
+              document.querySelectorAll(".add-movie-btn").forEach((btn) => {
+                btn.addEventListener("click", function (e) {
+                  const movieId = e.target.getAttribute("id");
+                  console.log(movieId);
+                  const movie = movieArr.find((m) => m.imdbID === movieId);
+                  fetch(`${apiBaseURL}/api/add`, {
+                    method: "POST",
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(movie),
+                  })
+                    .then((response) => {
+                      console.log(movie);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                });
+              });
             })
             .catch((error) => {
               console.error("Error fetching movie details:", error);

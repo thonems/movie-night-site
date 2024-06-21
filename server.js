@@ -58,6 +58,7 @@ app.get("/api/movies", (request, response) => {
 app.post("/api/add", (request, response) => {
   console.log("Trying to add movie with api/add post");
   var myMovie = request.body;
+  myMovie._id = myMovie.imdbID;
   database
     .collection(COLLECTION_NAME)
     .insertOne(myMovie, function (error, result) {

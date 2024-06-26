@@ -88,6 +88,7 @@ form.addEventListener("submit", function (e) {
                   })
                     .then((response) => {
                       console.log(movie);
+                      alert("Added to watchlist");
                     })
                     .catch((error) => {
                       console.log(error);

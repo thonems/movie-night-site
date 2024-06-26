@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img src="${movie.Poster}" alt="${movie.Title} Poster" width="100">
                     <button onclick="deleteMovie('${movie._id}')">Delete</button>
                     <p>${movie.Plot} </p>
+                    <hr>
+                    <br>
                 `;
         watchlistDiv.appendChild(movieDiv);
       });
